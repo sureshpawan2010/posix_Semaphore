@@ -53,3 +53,22 @@ int main(int argc, char * argv[])
   
     pthread_exit(NULL);
 }
+
+/*
+NOTE:
+
+Threads can greatly simplify writing elegant and efficient programs. However, there are problems when multiple threads share a common address space, like the variable cnt in our earlier example.
+To understand what might happen, let us analyze this simple piece of code:
+
+      THREAD 1                THREAD 2
+      a = data;               b = data;
+      a++;                    b--;
+      data = a;               data = b;
+
+Now if this code is executed serially (for instance, THREAD 1 first and then THREAD 2), there are no problems. However threads execute in an arbitrary order, so consider the following situation:
+So data could end up +1, 0, -1, and there is NO WAY to know which value! It is completely non-deterministic!
+
+The solution to this is to provide functions that will block a thread if another thread is accessing data that it is using.
+
+Pthreads may use semaphores to achieve this. 
+*/
