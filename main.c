@@ -21,7 +21,10 @@ int main(void){
     sleep(4);
     printf("In a 2nd thread now..\n");
     pthread_create(&o2,NULL,T,NULL);
+    //wait for thread o1 to finish
     pthread_join(o1,NULL);
+    //wait for thread o2 to finish
     pthread_join(o2,NULL);
     sem_destroy(&s);
+    pthread_exit(NULL);
 }
