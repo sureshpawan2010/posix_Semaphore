@@ -5,10 +5,13 @@
 
 #define NITER 1000000
 
+//Semaphore instances
+sem_t mutex;
 int cnt = 0;
 
 void * Count(void * a)
 {
+    sem_wait(&mutex);
     int i, tmp;
     for(i = 0; i < NITER; i++)
     {
@@ -16,12 +19,15 @@ void * Count(void * a)
         tmp = tmp+1;    /* increment the local copy */
         cnt = tmp;      /* store the local value into the global cnt */ 
     }
+    sem_post(&mutex);
 }
 
 int main(int argc, char * argv[])
-{
+{   
+    int32_t sem_val = 1;
     pthread_t tid1, tid2;
-
+    //initialize semaphore
+    sem_init(&mutex,0,sem_val);
     if(pthread_create(&tid1, NULL, Count, NULL))
     {
       printf("\n ERROR creating thread 1");
@@ -56,6 +62,7 @@ int main(int argc, char * argv[])
 
 /*
 NOTE:
+Resource Link : http://www.csc.villanova.edu/~mdamian/threads/posixsem.html
 
 Threads can greatly simplify writing elegant and efficient programs. However, there are problems when multiple threads share a common address space, like the variable cnt in our earlier example.
 To understand what might happen, let us analyze this simple piece of code:
