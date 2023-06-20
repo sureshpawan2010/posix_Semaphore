@@ -62,7 +62,8 @@ int main(int argc, char * argv[])
 
 /*
 NOTE:
-Resource Link : http://www.csc.villanova.edu/~mdamian/threads/posixsem.html
+Resource Link 1: http://www.csc.villanova.edu/~mdamian/threads/posixsem.html
+              2: https://www.cs.cmu.edu/afs/cs/academic/class/15492-f07/www/pthreads.html
 
 Threads can greatly simplify writing elegant and efficient programs. However, there are problems when multiple threads share a common address space, like the variable cnt in our earlier example.
 To understand what might happen, let us analyze this simple piece of code:
